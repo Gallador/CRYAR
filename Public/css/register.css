@@ -1,0 +1,132 @@
+h {
+    color: white;
+    font-size: 2.5em;
+    margin: 1.5em;
+}
+
+body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container {
+    margin: 0;
+    max-width: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: inherit;
+    align-items: center;
+    background: #286EA9;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 25%;
+    width: 25%;
+    justify-content: center;
+}
+
+form > input {
+    text-align: center;
+    margin: 0 1.5em 1.5em 1.5em;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #BCE0FD;
+    border-radius: 1em;
+
+    /* font */
+    color: #2699FB;
+    line-height: 2.5em;
+    font-size: 1em;
+}
+
+button {
+    margin: 0 1em 1em 1em;
+    color: white;
+    background: #266DFB 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 2em;
+    border: none;
+
+    line-height: 2.5em;
+    font-size: 1em;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.logo > img {
+    height: 12em;
+    margin: 2em;
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.register > button {
+    color: white;
+    font-size: 0.8em;
+}
+
+.messages {
+    color: white;
+    text-align: center;
+    margin-bottom: 0.4em;
+}
+
+.navbar-font-color {
+    color: rgba(255,255,255,.5);
+}
+@media only screen and (max-device-width: 992px){
+    body {
+        font-size: 48px;
+        height: unset;
+    }
+    .container {
+        flex-direction: column;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    .logo > img {
+        width: 9.5em;
+        height: 50%;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 18px;
+    }
+    .container {
+        flex-direction: column;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    .logo > img {
+        width: 7.5em;
+    }
+}
