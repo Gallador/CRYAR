@@ -34,17 +34,17 @@ class UserRepository extends Repository {
             );
     }
     
-    public function registerUser(string $name, string $surname, string $email, string $password)
+    public function registerUser(string $name, string $surname, string $email, string $password): ?User
     {
         
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO cryar (Name, Surname, Email, Password) VALUES (:Name, :Surname, :Email, :Password)
+            INSERT INTO `cryar` (`Name`, `Surname`, `Email`, `Password`) VALUES (:Name, :Surname, :Email, :Password);
         ');
         
-        $stmt->bindParam(':Name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':Surname', $surname, PDO::PARAM_STR);
-        $stmt->bindParam(':Email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':Password', $password, PDO::PARAM_STR);
+        //$stmt->bindParam(':Name', $name, PDO::PARAM_STR);
+        //$stmt->bindParam(':Surname', $surname, PDO::PARAM_STR);
+        //$stmt->bindParam(':Email', $email, PDO::PARAM_STR);
+        //$stmt->bindParam(':Password', $password, PDO::PARAM_STR);
         $stmt->execute(array(
             ':Name' => $name, 
             ':Surname' => $surname, 
@@ -90,18 +90,29 @@ class UserRepository extends Repository {
             INSERT INTO `transaction` (`user_id`, `parking_id`, `time_start`, `time_end`) VALUES (:Email, '2', NOW(), ADDTIME(NOW(),'01:00:00'));
         ");
 
-        $sth = $this->database->connect()->prepare("
-        CREATE EVENT delete_helcow
-        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR DO 
-        DELETE FROM transaction WHERE transaction.`transaction_id`;
-        ");
-        
         $res = $suh->fetch(PDO::FETCH_ASSOC);
         $id = $res['id'];
+        $stmt->execute(array(':Email' => $id));
+
+        $get_transaction_id = $this->database->connect()->prepare("
+            SELECT transaction_id FROM transaction WHERE transaction.user_id = :Email AND transaction.parking_id = '2';
+        ");
+        $get_transaction_id->bindParam(':Email', $id);
+        $get_transaction_id->execute();
+        $transaction_id = $get_transaction_id->fetch(PDO::FETCH_ASSOC);
+        $tran_id = $transaction_id['transaction_id'];
+
+        $sth = $this->database->connect()->prepare("
+        CREATE EVENT `:transaction_id`
+        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR DO 
+        DELETE FROM transaction WHERE transaction.`transaction_id` = :transaction_id;
+        ");
+        
+        
 
         //$stmt->bindParam(':Email', $id, PDO::PARAM_STR);
-        $stmt->execute(array(':Email' => $id));
-        $sth->execute();
+        
+        $sth->execute(array(':transaction_id' => $tran_id));
         
     }
 
@@ -117,18 +128,30 @@ class UserRepository extends Repository {
         $stmt = $this->database->connect()->prepare("
             INSERT INTO `transaction` (`user_id`, `parking_id`, `time_start`, `time_end`) VALUES (:Email, '1', NOW(), ADDTIME(NOW(),'01:00:00'));
         ");
-        $sts = $this->database->connect()->prepare("
-        CREATE EVENT delete_szlak
-        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR DO 
-        DELETE FROM transaction WHERE transaction.`transaction_id`;
-        ");
-        
+
         $res = $sus->fetch(PDO::FETCH_ASSOC);
         $id = $res['id'];
+        $stmt->execute(array(':Email' => $id));
+
+        $get_transaction_id = $this->database->connect()->prepare("
+            SELECT transaction_id FROM transaction WHERE transaction.user_id = :Email AND transaction.parking_id = '1';
+        ");
+        $get_transaction_id->bindParam(':Email', $id);
+        $get_transaction_id->execute();
+        $transaction_id = $get_transaction_id->fetch(PDO::FETCH_ASSOC);
+        $tran_id = $transaction_id['transaction_id'];
+
+        $sts = $this->database->connect()->prepare("
+        CREATE EVENT `:transaction_id`
+        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR DO 
+        DELETE FROM transaction WHERE transaction.`transaction_id` = :transaction_id;
+        ");
+        
+        
 
         //$stmt->bindParam(':Email', $id, PDO::PARAM_STR);
-        $stmt->execute(array(':Email' => $id));
-        $sts->execute();
+        
+        $sts->execute(array(':transaction_id' => $tran_id));
         
     }
 
@@ -144,18 +167,30 @@ class UserRepository extends Repository {
         $stmt = $this->database->connect()->prepare("
             INSERT INTO `transaction` (`user_id`, `parking_id`, `time_start`, `time_end`) VALUES (:Email, '3', NOW(), ADDTIME(NOW(),'01:00:00'));
         ");
-        $stp = $this->database->connect()->prepare("
-        CREATE EVENT delete_pedzichow
-        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR DO 
-        DELETE FROM transaction WHERE transaction.`transaction_id`;
-        ");
-        
+
         $res = $sup->fetch(PDO::FETCH_ASSOC);
         $id = $res['id'];
+        $stmt->execute(array(':Email' => $id));
+
+        $get_transaction_id = $this->database->connect()->prepare("
+            SELECT transaction_id FROM transaction WHERE transaction.user_id = :Email AND transaction.parking_id = '3';
+        ");
+        $get_transaction_id->bindParam(':Email', $id);
+        $get_transaction_id->execute();
+        $transaction_id = $get_transaction_id->fetch(PDO::FETCH_ASSOC);
+        $tran_id = $transaction_id['transaction_id'];
+
+        $stp = $this->database->connect()->prepare("
+        CREATE EVENT `:transaction_id`
+        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR DO 
+        DELETE FROM transaction WHERE transaction.`transaction_id` = :transaction_id;
+        ");
+        
+        
 
         //$stmt->bindParam(':Email', $id, PDO::PARAM_STR);
-        $stmt->execute(array(':Email' => $id));
-        $stp->execute();
+        
+        $stp->execute(array(':transaction_id' => $tran_id));
         
     }
 

@@ -18,13 +18,13 @@ class RegisterController extends AppController {
             $password = $_POST['Password'];
             
 
-            $user = $userRepository->getUser($name, $surname, $email, $password);
+            //$user = $userRepository->getUser($name, $surname, $email, $password);
             
 
-            if (!$user) {
-                $this->render('register', ['messages' => ['User with this email already exist!']]);
-                return;
-            }
+            //if (!$user) {
+              //  $this->render('register', ['messages' => ['User with this email already exist!']]);
+                //return;
+            //}
 
             $userRepository->registerUser($name, $surname, $email, $password);
 
